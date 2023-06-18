@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mempool_app/blocs/block_list/block_list_bloc.dart';
 import 'package:mempool_app/config/routes.dart';
-import 'package:mempool_app/constants/colors.dart';
+import 'package:mempool_app/screens/main_screen.dart';
+import 'package:mempool_app/utils/colors.dart';
 
 void main() {
   runApp(const MempoolApp());
@@ -11,15 +14,19 @@ class MempoolApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mempool',
-      theme: ThemeData(
-        primarySwatch: Colors.yellow,
-        scaffoldBackgroundColor: backgroundColor,
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => BlockListBloc())],
+      child: MaterialApp(
+        title: 'Mempool',
+        theme: ThemeData(
+          primarySwatch: Colors.yellow,
+          scaffoldBackgroundColor: backgroundColor,
+        ),
+        home: const MainScreen(),
+        //initialRoute: '/',
+        routes: appRoutes,
+        debugShowCheckedModeBanner: false,
       ),
-      initialRoute: '/',
-      routes: appRoutes,
-      debugShowCheckedModeBanner: false,
     );
   }
 }
